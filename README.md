@@ -1,0 +1,1 @@
+Work in progress - learning pygame and implementing a version of chess.
