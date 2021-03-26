@@ -17,7 +17,7 @@ def main():
     clock = pygame.time.Clock()
     run = True
     InitializeBoard()
-    grid[0][0].getMoves()
+    grid[6][2].getMoves()
     # initPieces(boardPieces=boardPieces)
     while run:
         clock.tick(FPS)
