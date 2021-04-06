@@ -11,26 +11,26 @@ class InitializeBoard:
         pygame.display.update()
     
     def initPieces(self):
-        drawPiece(color="BLACK", name="ROOK", location=(0,0))
-        drawPiece(color="BLACK", name="KNIGHT", location=(0,1))
-        drawPiece(color="BLACK", name="BISHOP", location=(0,2))
-        drawPiece(color="BLACK", name="QUEEN", location=(0,3))
-        drawPiece(color="BLACK", name="KING",location=(0,4))
-        drawPiece(color="BLACK", name="BISHOP", location=(0,5))
-        drawPiece(color="BLACK", name="KNIGHT", location=(0,6))
-        drawPiece(color="BLACK", name="ROOK", location=(0,7))
-        # for i in range(8):
-        #     drawPiece(color="BLACK", name="PAWN", location=(1,i))
-        drawPiece(color="WHITE", name="ROOK", location=(7,0))
-        drawPiece(color="WHITE", name="KNIGHT", location=(7,1))
-        drawPiece(color="WHITE", name="BISHOP", location=(7,2))
-        drawPiece(color="WHITE", name="QUEEN", location=(7,3))
-        drawPiece(color="WHITE", name="KING",location=(7,4))
-        drawPiece(color="WHITE", name="BISHOP", location=(7,5))
-        drawPiece(color="WHITE", name="KNIGHT", location=(7,6))
-        drawPiece(color="WHITE", name="ROOK",  location=(7,7))
+        drawPiece(color="BLACK", name="ROOK", position=(0,0))
+        drawPiece(color="BLACK", name="KNIGHT", position=(0,1))
+        drawPiece(color="BLACK", name="BISHOP", position=(0,2))
+        drawPiece(color="BLACK", name="QUEEN", position=(0,3))
+        drawPiece(color="BLACK", name="KING",position=(0,4))
+        drawPiece(color="BLACK", name="BISHOP", position=(0,5))
+        drawPiece(color="BLACK", name="KNIGHT", position=(0,6))
+        drawPiece(color="BLACK", name="ROOK", position=(0,7))
         for i in range(8):
-            drawPiece(color="WHITE", name="PAWN", location=(6,i))
+            drawPiece(color="BLACK", name="PAWN", position=(1,i))
+        drawPiece(color="WHITE", name="ROOK", position=(7,0))
+        drawPiece(color="WHITE", name="KNIGHT", position=(7,1))
+        drawPiece(color="WHITE", name="BISHOP", position=(7,2))
+        drawPiece(color="WHITE", name="QUEEN", position=(7,3))
+        drawPiece(color="WHITE", name="KING",position=(7,4))
+        drawPiece(color="WHITE", name="BISHOP", position=(7,5))
+        drawPiece(color="WHITE", name="KNIGHT", position=(7,6))
+        drawPiece(color="WHITE", name="ROOK",  position=(7,7))
+        for i in range(8):
+            drawPiece(color="WHITE", name="PAWN", position=(6,i))
 
     def drawBoard(self, squareSize=100):
         widthOffset = (WIDTH - squareSize*8)/2 

@@ -22,13 +22,14 @@ class BoardSquare:
     moves: set of positions
     """
   moves = set()
-  def __init__(self, position: Position, width: int, piece: Piece=None, filled: bool=False, location:tuple = None):
+  def __init__(self, position: Position, width: int, piece: Piece=None, filled: bool=False, location:tuple = None, highlighted:bool = False):
 
     self.position = position
     self.width = width
     self.piece = piece
     self.filled = filled
     self.location = location
+    self.highlighted = highlighted
 
   def checkForPiece(self, position: tuple) -> bool:
     for i in position:
