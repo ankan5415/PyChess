@@ -1,5 +1,6 @@
 {
   "python.pythonPath": "/Users/aboyed/.local/share/virtualenvs/PyChess-0OeRnArG/bin/python",
   "python.linting.pylintEnabled": true,
-  "python.linting.enabled": true
+  "python.linting.enabled": true,
+  "python.linting.pycodestyleEnabled": false
 }
