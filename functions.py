@@ -18,8 +18,8 @@ def createBoardPieces():
     board.addPiece(location=Location(0,5), color=c1, name="BISHOP")
     board.addPiece(location=Location(0,6), color=c1, name="KNIGHT")
     board.addPiece(location=Location(0,7), color=c1, name="ROOK")
-    # for i in range(8):
-    #     board.addPiece(location=Location(1,i), color=c1, name="PAWN")
+    for i in range(8):
+        board.addPiece(location=Location(1,i), color=c1, name="PAWN")
     
     board.addPiece(location=Location(7,0), color=c2, name="ROOK")
     board.addPiece(location=Location(7,1), color=c2, name="KNIGHT")

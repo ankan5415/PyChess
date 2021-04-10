@@ -10,7 +10,7 @@ pygame.init()
 pygame.mixer.init()
 pygame.display.set_caption("Chess")
 
-FPS = 1
+FPS = 40
 BACKGROUND = Colors.BACKGROUND_BLACK
 PIECE_DIM = int(min((WIDTH, HEIGHT)) / 12)
 WIN.fill(BACKGROUND)
@@ -19,6 +19,7 @@ WIN.fill(BACKGROUND)
 def main():
     createBoardPieces()
     board.getMoves(Location(0,7))
+    print(board.positionToLocation(Position(100, 100)))
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -28,6 +29,8 @@ def main():
                 run = False
         
         #update
+        x, y = pygame.mouse.get_pos()
+        print(board.positionToLocation(Position(x, y)))
         sprites.update()
         #draw
         WIN.fill(BACKGROUND)
@@ -35,7 +38,6 @@ def main():
         sprites.draw(WIN)
         pygame.display.flip()
         board.clearIndicators()
-        # board.movePiece(Location(1,1), Location(2,2))
     pygame.quit()
 
 

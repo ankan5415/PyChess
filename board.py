@@ -76,7 +76,23 @@ class Board:
         for move in self.moves:
             square = self.getSquare(move)
             square.indicator.kill()
-    
+
+    def positionToLocation(self, position:Position):
+        x, y= position
+        r = -1
+        c = -1
+        for row in range(8):
+            square = self.getSquare(Location(row, 0))
+            if square.pos.y <= y <= square.pos.y + SQUARE:
+                r = row
+                break
+        for col in range(8):
+            square = self.getSquare(Location(0, col))
+            if square.pos.x <= x <= square.pos.x + SQUARE:
+                c = col
+                break
+        return Location(r, c)
+
     def getMoves(self, location:Location):
         piece = self.getSquare(location).piece
         def checkForPiece(loc: Location) -> bool:
