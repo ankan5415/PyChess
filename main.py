@@ -1,8 +1,10 @@
 from decorators import logInit
 import pygame
 from config import Location, Position, WIN, WIDTH, HEIGHT, Colors, sprites
-from Board import Board
+from Board import board
 from Piece import Piece
+from functions import createBoardPieces
+from Indicator import Indicator
 
 pygame.init()
 pygame.mixer.init()
@@ -12,15 +14,13 @@ FPS = 1
 BACKGROUND = Colors.BACKGROUND_BLACK
 PIECE_DIM = int(min((WIDTH, HEIGHT)) / 12)
 WIN.fill(BACKGROUND)
-board = Board()
-x = board.addPiece(location=Location(1, 1), color="BLACK", name="PAWN")
-sprites.add(x)
 
 # @logInit
 def main():
+    createBoardPieces()
+    board.getMoves(Location(0,7))
     clock = pygame.time.Clock()
     run = True
-    i = 2
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -34,7 +34,8 @@ def main():
         board.drawBoard()
         sprites.draw(WIN)
         pygame.display.flip()
-        board.movePiece(Location(1,1), Location(2,2))
+        board.clearIndicators()
+        # board.movePiece(Location(1,1), Location(2,2))
     pygame.quit()
 
 

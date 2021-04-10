@@ -1,4 +1,4 @@
-from pygame import sprite
+from pygame import color, sprite
 from Square import Square
 from decorators import logInit
 from config import Position, SQUARE, WIDTH, HEIGHT, Location, sprites
@@ -48,11 +48,14 @@ class Board:
 
         square = self.getSquare(location)
         square.addPiece(color, name)
+        sprites.add(square.piece)
         return square.piece
+    
 
     def deletePiece(self, location: Location):
         square = self.getSquare(location)
         square.piece.delete()
+        
 
     def movePiece(self, oldLocation: Location, newLocation: Location):
         oldSquare = self.getSquare(oldLocation)
@@ -61,3 +64,113 @@ class Board:
         self.deletePiece(oldLocation)
         piece = self.addPiece(newLocation, color, name)
         sprites.add(piece)
+
+
+    def addIndicator(self, location:Location):
+        square = self.getSquare(location)
+        square.addIndicator()
+        sprites.add(square.indicator)
+        return square.indicator
+
+    def clearIndicators(self):
+        for move in self.moves:
+            square = self.getSquare(move)
+            square.indicator.kill()
+    
+    def getMoves(self, location:Location):
+        piece = self.getSquare(location).piece
+        def checkForPiece(loc: Location) -> bool:
+            for i in loc:
+                if not 0 <= i <= 7:
+                    return False
+            square = self.getSquare(loc)
+            if not square.piece:
+                self.moves.add(loc)
+                return False
+            else:
+                if square.piece.color != piece.color:
+                    self.moves.add(loc)
+                return True
+
+        self.moves = set()
+        row, col = location
+        if piece.name == "ROOK":
+            for i in range(row - 1, 0):
+                if checkForPiece(Location(i, col)):
+                    break
+            for i in range(row + 1, 8):
+                if checkForPiece(Location(i, col)):
+                    break
+            for i in range(col - 1, 0):
+                if checkForPiece(Location(row, i)):
+                    break
+            for i in range(col + 1, 8):
+                if checkForPiece(Location(row, i)):
+                    break
+        elif piece.name == "KNIGHT":            
+            checkForPiece(Location(row + 2, col - 1))
+            checkForPiece(Location(row + 2, col + 1))
+            checkForPiece(Location(row - 2, col - 1))
+            checkForPiece(Location(row - 2, col + 1))
+            checkForPiece(Location(row - 1, col + 2))
+            checkForPiece(Location(row + 1, col + 2))
+            checkForPiece(Location(row - 1, col - 2))
+            checkForPiece(Location(row + 1, col - 2))
+        elif piece.name == "BISHOP":
+            for i in range(8):
+                checkForPiece(Location(row + i, col + i))
+                checkForPiece(Location(row - i, col + i))
+                checkForPiece(Location(row + i, col - i))
+                checkForPiece(Location(row - i, col - i))
+        elif piece.name == "QUEEN":
+            for i in range(8):
+                checkForPiece(Location(row + i, col + i))
+                checkForPiece(Location(row - i, col + i))
+                checkForPiece(Location(row + i, col - i))
+                checkForPiece(Location(row - i, col - i))
+            for i in range(row - 1, 0):
+                if checkForPiece(Location(i, col)):
+                    break
+            for i in range(row + 1, 8):
+                if checkForPiece(Location(i, col)):
+                    break
+            for i in range(col - 1, 0):
+                if checkForPiece(Location(row, i)):
+                    break
+            for i in range(col + 1, 8):
+                if checkForPiece(Location(row, i)):
+                    break
+        elif piece.name == "KING":
+            checkForPiece(Location(row + 1, col + 1))
+            checkForPiece(Location(row + 1, col - 1))
+            checkForPiece(Location(row - 1, col + 1))
+            checkForPiece(Location(row - 1, col - 1))
+            checkForPiece(Location(row + 1, col))
+            checkForPiece(Location(row - 1, col))
+            checkForPiece(Location(row, col + 1))
+            checkForPiece(Location(row, col - 1))
+        elif piece.name == "PAWN":
+            if piece.color == "BLACK":
+                checkForPiece(Location(row + 1, col))
+                if self.getSquare(Location(row + 1, col + 1)).piece:
+                    self.moves.add(Location(row + 1, col + 1))
+                if self.getSquare(Location(row + 1, col - 1)).piece:
+                    self.moves.add(Location(row + 1, col - 1))
+            else:
+                checkForPiece(Location(row - 1, col))
+                if self.getSquare(Location(row - 1, col + 1)).piece:
+                    # print("here")
+                    self.moves.add(Location(row - 1, col + 1))
+                if self.getSquare(Location(row - 1, col + 1)).piece:
+                    # print("here")
+                    self.moves.add(Location(row - 1, col - 1))
+        else:
+            print("Clicked on an invalid chess tile")
+        
+        for move in self.moves:
+            self.addIndicator(move)
+        # print(self.moves)
+
+
+
+board = Board()

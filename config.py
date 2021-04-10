@@ -5,6 +5,11 @@ import pygame
 WIDTH, HEIGHT = 900, 800
 WIN = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
 SQUARE = 100
+PIECE_SCALE_FACTOR = 0.6
+BOARD_INVERTED = False
+INDICATOR_RADIUS = 25
+INDICATOR_TRANSPARENCY = 80 #between 0 and 100
+
 
 sprites = pygame.sprite.Group()
 
