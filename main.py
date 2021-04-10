@@ -27,17 +27,20 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            elif event.type == pygame.MOUSEBUTTONUP:
+                print("here")
+                board.handleClick()
+            else:
+                pass
         
         #update
-        x, y = pygame.mouse.get_pos()
-        print(board.positionToLocation(Position(x, y)))
+        board.getMousePosition()
         sprites.update()
         #draw
         WIN.fill(BACKGROUND)
         board.drawBoard()
         sprites.draw(WIN)
         pygame.display.flip()
-        board.clearIndicators()
     pygame.quit()
 
 

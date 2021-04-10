@@ -1,3 +1,4 @@
+import pygame
 from pygame import color, sprite
 from Square import Square
 from decorators import logInit
@@ -12,6 +13,7 @@ class Board:
     """
 
     grid = []
+    mouseClicked = False
 
     def __init__(self):
         self.drawBoard()
@@ -45,7 +47,6 @@ class Board:
         return self.grid[location.row][location.col]
 
     def addPiece(self, location: Location, color, name):
-
         square = self.getSquare(location)
         square.addPiece(color, name)
         sprites.add(square.piece)
@@ -61,6 +62,7 @@ class Board:
         oldSquare = self.getSquare(oldLocation)
         name = oldSquare.piece.name
         color = oldSquare.piece.color
+        print(oldLocation, name, color)
         self.deletePiece(oldLocation)
         piece = self.addPiece(newLocation, color, name)
         sprites.add(piece)
@@ -76,8 +78,11 @@ class Board:
         for move in self.moves:
             square = self.getSquare(move)
             square.indicator.kill()
+        self.moves = set()
+        self.indicatorOrigin = Location(-1, -1)
 
-    def positionToLocation(self, position:Position):
+
+    def positionToLocation(self, position:Position) -> Location:
         x, y= position
         r = -1
         c = -1
@@ -93,7 +98,32 @@ class Board:
                 break
         return Location(r, c)
 
+
+    def getMousePosition(self):
+        x, y = pygame.mouse.get_pos()
+        self.mouseLocation = self.positionToLocation(Position(x, y))
+        return self.mouseLocation
+    
+    def handleClick(self):
+        square = self.getSquare(self.mouseLocation)
+        print(self.indicatorOrigin, self.mouseLocation)
+        if square.indicator and -1 not in self.indicatorOrigin:
+            # print(self.getSquare(self.indicatorOrigin).piece.name)
+            self.movePiece(self.indicatorOrigin, self.mouseLocation)
+            self.clearIndicators()
+        elif square.piece and not square.indicator:
+            self.getMoves(self.mouseLocation)
+        else:
+            self.clearIndicators()
+            print("clicked on empty square")
+            
+
+
+
+    #========== Garbage code starts here. ============
+
     def getMoves(self, location:Location):
+        self.indicatorOrigin = location
         piece = self.getSquare(location).piece
         def checkForPiece(loc: Location) -> bool:
             for i in loc:
